@@ -164,3 +164,6 @@ Switch#show ip interface vlan1
 Vlan1 is administratively down, line protocol is down
   Internet protocol processing disabled
 ```
+**f.  подклюючаем кабель Ethernet компьютера PC-A к порту FE0/6 на коммутаторе и изучите IP-свойства интерфейса SVI сети VLAN 1**
+
+![](FE06.png)
