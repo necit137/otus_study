@@ -373,3 +373,191 @@ S1(config-line)#login
 На компьютере PC-A вводим IP-адресс и маску подсети:
 ![](IPadress_PC-A.png)
 
+### Часть 3. Проверка сетевых подключений
+### Шаг 1. Отображение конфигурации коммутатора.
+#### a. Пример конфигурации настроенного коммутатора:
+```
+S1#show run
+Building configuration...
+
+Current configuration : 1318 bytes
+!
+version 15.0
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname S1
+!
+enable secret 5 $1$mERr$9cTjUIEqNGurQiFU.ZeCi1
+!
+!
+!
+no ip domain-lookup
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ ip address 192.168.1.1 255.255.255.0
+!
+banner motd ^C
+Unauthorized access is strictly prohibited. ^C
+!
+!
+!
+line con 0
+ password 7 0822455D0A16
+ logging synchronous
+ login
+!
+line vty 0 4
+ password 7 0822455D0A16
+ login
+line vty 5 15
+ password 7 0822455D0A16
+ login
+!
+!
+!
+!
+end
+
+
+S1# 
+```
+#### b. Проверка параметров VLAN 1:
+```
+S1# show interfaces vlan1
+Vlan1 is up, line protocol is up
+  Hardware is CPU Interface, address is 000c.8519.3c72 (bia 000c.8519.3c72)
+  Internet address is 192.168.1.1/24
+  MTU 1500 bytes, BW 100000 Kbit, DLY 1000000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 21:40:21, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     1682 packets input, 530955 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicast)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     563859 packets output, 0 bytes, 0 underruns
+     0 output errors, 23 interface resets
+     0 output buffer failures, 0 output buffers swapped out
+
+S1#
+```
+Полоса пропускания (Bandwidth) данного интерфейса VLAN1 составляет *100000 Kbit*, то есть *100 Мбит/с*.
+### Шаг 2. Тестирование сквозное соединение, отправкой эхо-запроса.
+#### a. проверка адреса персонального компьютера PC-A утилитой *Ping*:
+```
+C:\>ping 192.168.1.2
+
+Pinging 192.168.1.2 with 32 bytes of data:
+
+Reply from 192.168.1.2: bytes=32 time=3ms TTL=128
+Reply from 192.168.1.2: bytes=32 time=2ms TTL=128
+Reply from 192.168.1.2: bytes=32 time=2ms TTL=128
+Reply from 192.168.1.2: bytes=32 time=2ms TTL=128
+
+Ping statistics for 192.168.1.2:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 2ms, Maximum = 3ms, Average = 2ms
+
+C:\>
+```
+#### a. проверка адреса Коммутатора S1 утилитой *Ping*:
+```
+C:\>ping 192.168.1.1
+
+Pinging 192.168.1.1 with 32 bytes of data:
+
+Reply from 192.168.1.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.1.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.1.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.1.1: bytes=32 time<1ms TTL=255
+
+Ping statistics for 192.168.1.1:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>
+```
+### Шаг 3. Проверяем удаленное управление коммутатором S1
+
+
+```
+Trying 192.168.1.1 ...Open
+Unauthorized access is strictly prohibited. 
+
+
+User Access Verification
+
+Password: *cisco*
+S1>enable
+Password: *class*
+S1#exit
+S1#
+```
