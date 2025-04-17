@@ -13,20 +13,32 @@
 1. [Создание сети и проверка настроек коммутатора по умолчанию](https://github.com/necit137/otus_study/blob/main/lab%2001/README.md#часть-1-создание-сети-и-проверка-настроек-коммутатора-по-умолчанию)
    - [Шаг 1. Создаем сеть, согласно топологии](https://github.com/necit137/otus_study/blob/main/lab%2001/README.md#шаг-1-создаем-сеть-согласно-топологии)
    - [Шаг 2. Проверяем настройки коммутатора по умолчанию](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#шаг-2-проверяем-настройки-коммутатора-по-умолчанию)
+        - [a. проверяем наличие файла конфигурации коммутатора](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#a-проверяем-наличие-файла-конфигурации-коммутатора)
+        - [b. Изучаем файл *running configuration*](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#b-изучаем-файл-running-configuration)
+        - [c. Изучаем файл загрузочной конфигурации (startup-config)](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#c-изучаем-файл-загрузочной-конфигурации-startup-config)
+        - [d. Изучаем характеристики SVI для VLAN 1](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#d-изучаем-характеристики-svi-для-vlan-1)
+        - [e. Изучаем IP-свойства интерфейса SVI сети VLAN 1](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#e-изучаем-ip-свойства-интерфейса-svi-сети-vlan-1)
+        - [f. Подключаем кабель Ethernet компьютера PC-A к порту FE0/6 на коммутаторе и изучите IP-свойства интерфейса SVI сети VLAN 1](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#f-подклюючаем-кабель-ethernet-компьютера-pc-a-к-порту-fe06-на-коммутаторе-и-изучите-ip-свойства-интерфейса-svi-сети-vlan-1)
+        - [g. Изучаем сведения о версии ОС Cisco IOS на коммутаторе](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#g-изучаем-сведения-о-версии-ос-cisco-ios-на-коммутаторе)
+        - [h. Изучаем свойства по умолчанию интерфейса FastEthernet 0/6, который используется компьютером PC-A.](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#h-изучаем-свойства-по-умолчанию-интерфейса-fastethernet-06-который-используется-компьютером-pc-a)
+        - [i. Изучаем флеш-память](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#i-изучаем-флеш-память)
+     
 ### Часть 1. Создание сети и проверка настроек коммутатора по умолчанию
-#### Шаг 1. Создаем сеть, согласно топологии
+### Шаг 1. Создаем сеть, согласно топологии
 Подключаем ПК к коммутатору через консольный кабель
 
 ![](comport.png)
-#### вопросы к шагу:
+
+**вопросы к шагу:**
 - **Почему нужно использовать консольное подключение для первоначальной настройки коммутатора?**
 - **Почему нельзя подключиться к коммутатору через Telnet или SSH?**
-#### ответы к шагу:
+
+**ответы к шагу:**
 - первичная настройка коммутатора возможна только через консоль.
 - нельзя подключиться через Telnet или SSH, так как коммутатор не настроен для работы в сети.
-#### Шаг 2. Проверяем настройки коммутатора по умолчанию
+### Шаг 2. Проверяем настройки коммутатора по умолчанию
 
-**a. проверяем наличие файла конфигурации коммутатора:**
+#### a. проверяем наличие файла конфигурации коммутатора
 ```
 Switch>enable
 Switch#show running-config 
@@ -120,11 +132,11 @@ line vty 5 15
 !
 end
 ```
-**b. Изучаем файл running configuration:**
+#### b. Изучаем файл *running configuration*
 
-Согласно файлу конфигурации на коммутаторе 2960 имеется 24 интерфейса FastEthernet и 2 интерфейса Gigabit Ethernet. Диапазон значений, отображаемых в vty-линиях от 0 до 15.
+Согласно файлу конфигурации на коммутаторе 2960 имеется *24 интерфейса FastEthernet* и *2 интерфейса Gigabit Ethernet*. Диапазон значений, отображаемых в vty-линиях *от 0 до 15*.
 
-**c. Изучаем файл загрузочной конфигурации (startup-config):**
+#### c. Изучаем файл загрузочной конфигурации (startup-config):
 
 ```
 Switch#show startup-config 
@@ -132,7 +144,7 @@ startup-config is not present
 ```
 сообщение "startup-config is not present" означает что в NVRAM отсутствует сохраненный файл конфигурации.
 
-**d. Изучаем характеристики SVI для VLAN 1**
+#### d. Изучаем характеристики SVI для VLAN 1
 ```
 Switch#show interface vlan1
 Vlan1 is administratively down, line protocol is down
@@ -156,15 +168,15 @@ Vlan1 is administratively down, line protocol is down
      0 output errors, 23 interface resets
      0 output buffer failures, 0 output buffers swapped out
 ```
-IP-адрес сети VLAN 1 не назначен. SVI имеет MAC-адрес: *000c.8519.3c72*. Сам интерфейс выключен.
+IP-адрес сети VLAN 1 *не назначен*. SVI имеет MAC-адрес: *000c.8519.3c72*. Сам интерфейс *выключен*.
 
-**e. Изучаем IP-свойства интерфейса SVI сети VLAN 1**
+#### e. Изучаем IP-свойства интерфейса SVI сети VLAN 1
 ```
 Switch#show ip interface vlan1
 Vlan1 is administratively down, line protocol is down
   Internet protocol processing disabled
 ```
-**f.  подклюючаем кабель Ethernet компьютера PC-A к порту FE0/6 на коммутаторе и изучите IP-свойства интерфейса SVI сети VLAN 1**
+#### f. Подключаем кабель Ethernet компьютера PC-A к порту FE0/6 на коммутаторе и изучите IP-свойства интерфейса SVI сети VLAN 1
 
 ![](FE06.png)
 
@@ -174,8 +186,9 @@ Vlan1 is administratively down, line protocol is down
 
 %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/6, changed state to up
 ```
-**g. Изучаем сведения о версии ОС Cisco IOS на коммутаторе**
+#### g. Изучаем сведения о версии ОС Cisco IOS на коммутаторе
 ```
+Switch# show version
 Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE4, RELEASE SOFTWARE (fc1)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2013 by Cisco Systems, Inc.
@@ -236,3 +249,72 @@ Switch Ports Model              SW Version            SW Image
 
 Configuration register is 0xF
 ```
+коммутатор работает под управлением версии ОС Cisco IOS *15.0(2)SE4*. 
+
+Название файла образа системы: *"flash:c2960-lanbasek9-mz.150-2.SE4.bin"*
+
+#### h. Изучаем свойства по умолчанию интерфейса FastEthernet 0/6, который используется компьютером PC-A
+```
+Switch#show interface fastEthernet 0/6
+FastEthernet0/6 is up, line protocol is up (connected)
+  Hardware is Lance, address is 00e0.b0b6.6806 (bia 00e0.b0b6.6806)
+ BW 100000 Kbit, DLY 1000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full-duplex, 100Mb/s
+  input flow-control is off, output flow-control is off
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:08, output 00:00:05, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue :0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     956 packets input, 193351 bytes, 0 no buffer
+     Received 956 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     2357 packets output, 263570 bytes, 0 underruns
+```
+Согласно полученным выходным данным, мы можем понять, что данный интефейс включён. MAC-адрес интерфейса: *00e0.b0b6.6806*
+
+если требуется включить интерфейс, прописыаем следующее:
+```
+Switch#configure terminal 
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#interface fastEthernet 0/6
+Switch(config-if)#no shutdown 
+
+%LINK-5-CHANGED: Interface FastEthernet0/6, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/6, changed state to up
+
+Switch#
+%SYS-5-CONFIG_I: Configured from console by console
+```
+в интерфейсе настройки скорости и дуплекса заданы значением: *Full-duplex, 100Mb/s*
+
+#### i. Изучаем флеш-память
+Для отображения флеш-каталога воспользуемся командой *show flash*
+```
+Switch#show flash
+Directory of flash:/
+
+    1  -rw-     4670455          <no date>  2960-lanbasek9-mz.150-2.SE4.bin
+
+64016384 bytes total (59345929 bytes free)
+Switch#
+```
+или командой *dir flash:*
+```
+Switch#dir flash: 
+Directory of flash:/
+
+    1  -rw-     4670455          <no date>  2960-lanbasek9-mz.150-2.SE4.bin
+
+64016384 bytes total (59345929 bytes free)
+```
+Мы видим, что нынешнему образу Cisco IOS присвоено имя: *"2960-lanbasek9-mz.150-2.SE4.bin"*
