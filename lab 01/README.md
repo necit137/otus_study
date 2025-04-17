@@ -22,7 +22,9 @@
         - [g. Изучаем сведения о версии ОС Cisco IOS на коммутаторе](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#g-изучаем-сведения-о-версии-ос-cisco-ios-на-коммутаторе)
         - [h. Изучаем свойства по умолчанию интерфейса FastEthernet 0/6, который используется компьютером PC-A.](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#h-изучаем-свойства-по-умолчанию-интерфейса-fastethernet-06-который-используется-компьютером-pc-a)
         - [i. Изучаем флеш-память](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#i-изучаем-флеш-память)
-     
+2. [Настройка базовых параметров сетевых устройств](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#часть-2-настройка-базовых-параметров-сетевых-устройств)
+     - [Шаг 1. Настройте базовые параметры коммутатора](https://github.com/necit137/otus_study/edit/main/lab%2001/README.md#шаг-1-настройте-базовые-параметры-коммутатора)
+       
 ### Часть 1. Создание сети и проверка настроек коммутатора по умолчанию
 ### Шаг 1. Создаем сеть, согласно топологии
 Подключаем ПК к коммутатору через консольный кабель
@@ -318,3 +320,49 @@ Directory of flash:/
 64016384 bytes total (59345929 bytes free)
 ```
 Мы видим, что нынешнему образу Cisco IOS присвоено имя: *"2960-lanbasek9-mz.150-2.SE4.bin"*
+
+### Часть 2. Настройка базовых параметров сетевых устройств
+### Шаг 1. Настройте базовые параметры коммутатора
+#### a. В режиме глобальной конфигурации, прописываем следующие базовые параметры конфигурации  на коммутаторе S1:
+```
+Switch>enable
+Switch#configure terminal 
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#no ip domain-lookup 
+Switch(config)#hostname S1
+S1(config)#service password-encryption 
+S1(config)#enable secret class
+S1(config)#banner motd #
+Enter TEXT message.  End with the character '#'.
+Unauthorized access is strictly prohibited. #
+S1(config)#
+```
+#### b. Назначаем IP-адрес интерфейсу SVI на коммутаторе:
+```
+S1#configure terminal 
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface vlan1
+S1(config-if)#IP address 192.168.1.1 255.255.255.0
+S1(config-if)#no shutdown 
+
+S1(config-if)#
+%LINK-5-CHANGED: Interface Vlan1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to up
+```
+#### c. Ограничиваем доступ через порт консоли с помощью пароля:
+```
+S1#configure terminal 
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#line console 0
+S1(config-line)#password cisco
+S1(config-line)#login
+```
+#### d. Защита доступа к линии VTY:
+```
+S1(config)#line vty 0 15
+S1(config-line)#password cisco
+S1(config-line)#login
+```
+команда *Login* необходима для включения доступа к VTY.
+### Шаг 2. Настройка IP-адреса на компьютере PC-A.
