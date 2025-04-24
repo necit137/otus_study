@@ -20,4 +20,4 @@
 
 Производим настройку PC-B
 
-![](PC-A_configuration.png)
+![](PC-B_configuration.png)
