@@ -13,6 +13,10 @@
       - [b.	Настраиваем IP-адреса, как указано в таблице адресации](https://github.com/necit137/otus_study/edit/main/lab%2002/README.md#bнастраиваем-ip-адреса-как-указано-в-таблице-адресации)
       - [c.	Назначаем cisco в качестве паролей консоли и VTY](https://github.com/necit137/otus_study/edit/main/lab%2002/README.md#cназначаем-cisco-в-качестве-паролей-консоли-и-vty)
       - [d.	Назначаем class в качестве пароля доступа к привилегированному режиму EXEC](https://github.com/necit137/otus_study/edit/main/lab%2002/README.md#dназначаем-class-в-качестве-пароля-доступа-к-привилегированному-режиму-exec)
+2. [Изучение таблицы МАС-адресов коммутатора](https://github.com/necit137/otus_study/edit/main/lab%2002/README.md#часть-2-изучение-таблицы-мас-адресов-коммутатора)
+    - [Шаг 1. Запишем МАС-адреса сетевых устройств](https://github.com/necit137/otus_study/edit/main/lab%2002/README.md#шаг-1-запишем-мас-адреса-сетевых-устройств)
+      - [а.	Открываем командную строку на PC-A и PC-B и вводим команду ***ipconfig /all***](https://github.com/necit137/otus_study/edit/main/lab%2002/README.md#аоткрываем-командную-строку-на-pc-a-и-pc-b-и-вводим-команду-ipconfig-all)
+
 
 ### Часть 1. Создание и настройка сети
 ### Шаг 1. Подключаем сеть в соответствии с топологией
@@ -97,8 +101,11 @@ S1(config)#
 Пример ввода команды с командной строки PC-A:
 ![](PC-A_ipconfig.png)
 
-Physical Address PC-A................: 0001.C779.43AC
+физические адреса адаптера Ethernet:
 
-Physical Address PC-B................: 0030.A3B3.36B2
+Physical Address PC-A ................ : 0001.C779.43AC
+
+Physical Address PC-B ................ : 0030.A3B3.36B2
+
 #### b.
 
