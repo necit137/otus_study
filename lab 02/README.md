@@ -31,7 +31,7 @@
 ![](PC-B_configuration.png)
 
 ### Шаг 3. Выполняем инициализацию и перезагрузку коммутаторов
-Для первичного подключения к коммутаторам **S1** и **S2**, подключаем к ним компьютер PC-A через COM-порт. 
+Для первичного подключения к коммутаторам ***S1*** и ***S2***, подключаем к ним компьютер PC-A через COM-порт. 
 ![](PC-A_comport.png)
 
 Командой ***erase startup-config*** удаляем все конфигурации на коммутаторе: 
@@ -79,7 +79,7 @@ S1(config-if)#
 %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to up
 S1(config-if)#
 ```
-#### c.	Назначаем cisco в качестве паролей консоли и VTY
+#### c.	Назначаем ***cisco*** в качестве паролей консоли и VTY
 
 ```
 S1#configure terminal 
@@ -88,7 +88,7 @@ S1(config)#line vty 0 15
 S1(config-line)#password cisco
 S1(config-line)#login
 ```
-#### d.	Назначаем class в качестве пароля доступа к привилегированному режиму EXEC
+#### d.	Назначаем ***class*** в качестве пароля доступа к привилегированному режиму EXEC
 
 ```
 S1(config)#service password-encryption 
@@ -98,14 +98,50 @@ S1(config)#
 ### Часть 2. Изучение таблицы МАС-адресов коммутатора
 ### Шаг 1. Запишем МАС-адреса сетевых устройств
 #### а.	Открываем командную строку на PC-A и PC-B и вводим команду ***ipconfig /all***
-Пример ввода команды с командной строки PC-A:
+Пример ввода команды с командной строки компьютера PC-A:
 ![](PC-A_ipconfig.png)
 
-физические адреса адаптера Ethernet:
+Физические адреса адаптера Ethernet:
 
 Physical Address PC-A ................ : 0001.C779.43AC
 
 Physical Address PC-B ................ : 0030.A3B3.36B2
 
-#### b.
+#### b. Подключаемся к коммутаторам S1 и S2 через консоль и вводим команду ***show interface F0/1*** на каждом коммутаторе
+Пример ввода команды с коммутатора S1:
+```
+User Access Verification
 
+Password: 
+S1>enable
+Password: 
+S1#show interfaces FastEthernet 0/1
+FastEthernet0/1 is up, line protocol is up (connected)
+  Hardware is Lance, address is 0004.9ac2.2d01 (bia 0004.9ac2.2d01)
+ BW 100000 Kbit, DLY 1000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full-duplex, 100Mb/s
+  input flow-control is off, output flow-control is off
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:08, output 00:00:05, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue :0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     956 packets input, 193351 bytes, 0 no buffer
+     Received 956 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     2357 packets output, 263570 bytes, 0 underruns
+ --More-- 
+```
+Физические адреса оборудования:
+
+МАС-адрес коммутатора S1 Fast Ethernet 0/1: ***0004.9ac2.2d01***
+
+МАС-адрес коммутатора S2 Fast Ethernet 0/1: ***00e0.8f6a.e301***
