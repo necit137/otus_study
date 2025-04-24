@@ -16,4 +16,8 @@
 ### Шаг 2. Настраиваем узлы ПК
 Производим настройку PC-A
 
+![](PC-A configuration.png)
+
 Производим настройку PC-B
+
+![](PC-A configuration.png)
